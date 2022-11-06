@@ -24,7 +24,7 @@ class LabelController extends Controller
      */
     public function create()
     {
-        return view('labels/create');
+        return view('labels.create');
     }
 
     /**

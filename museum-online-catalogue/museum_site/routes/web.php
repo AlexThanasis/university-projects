@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ItemController::class, 'index']) -> name('home');
 
+Route::resource('/items', ItemController::class);
+Route::resource('/comments', CommentController::class);
 Route::resource('/labels', LabelController::class);
 
 Route::get('/dashboard', function () {

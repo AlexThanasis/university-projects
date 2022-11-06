@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Item;
+use App\Models\Label;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -14,7 +17,13 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        return view('items.index', [
+            // 'items' => Item::all()
+            'items' => Item::with('comments') -> get(),
+            'labels' => Label::all(),
+            'user_count' => User::count(),
+            'comments_count' => Comment::count(),
+        ]);
     }
 
     /**
