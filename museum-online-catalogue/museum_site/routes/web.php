@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LabelController;
 use Illuminate\Support\Facades\Route;
 
 /*

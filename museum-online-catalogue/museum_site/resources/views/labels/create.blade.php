@@ -24,7 +24,10 @@
                 parent: $refs.textColorPicker,
                 onDone: (color) => textColor = color.hex
             });
-        }" method="POST">
+        }"
+        actions="{{ route('labels.store') }}"
+        method="POST">
+        @csrf
             <div class="grid grid-cols-4 gap-6">
                 <div class="col-span-4 lg:col-span-2 grid grid-cols-2 gap-3">
                     <div class="col-span-2">
