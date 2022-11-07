@@ -12,7 +12,7 @@
         </div>
 
         <form
-        x-data="{ categoryName: '{{ old('name', $label -> name) }}', bgColor: '{{ old('bg-color', $label -> bg_color)}}', textColor: '{{ old('text-color', $label -> text_color)}}' }"
+        x-data="{ labelName: '{{ old('name', $label -> name) }}', bgColor: '{{ old('bg-color', $label -> bg_color)}}', textColor: '{{ old('text-color', $label -> text_color)}}' }"
         x-init="() => {
             new Picker({
                 color: bgColor,
@@ -37,7 +37,7 @@
                         <label for="name" class="block font-medium text-gray-700">Cimke neve</label>
                         <input type="text" name="name" id="name"
                             class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300"
-                            x-model="categoryName">
+                            x-model="labelName">
                         @error('name')
                             <div class="font-medium text-red-500">{{ $message }}</div>
                         @enderror
@@ -62,9 +62,9 @@
                     </div>
                 </div>
                 <div class="col-span-4 lg:col-span-2">
-                    <div x-show="categoryName.length > 0">
+                    <div x-show="labelName.length > 0">
                         <label class="block font-medium text-gray-700 mb-1">Előnézet</label>
-                        <span x-text="categoryName" :style="`background-color: ${bgColor}; color: ${textColor}`"
+                        <span x-text="labelName" :style="`background-color: ${bgColor}; color: ${textColor}`"
                             class="py-0.5 px-1.5 font-semibold"></span>
                     </div>
                 </div>

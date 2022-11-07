@@ -22,7 +22,7 @@ Route::resource('/items', ItemController::class);
 Route::resource('/comments', CommentController::class);
 Route::resource('/labels', LabelController::class);
 
-Route::post('/labels', [LabelController::class, 'store']);
+// Route::post('/labels', [LabelController::class, 'store']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
