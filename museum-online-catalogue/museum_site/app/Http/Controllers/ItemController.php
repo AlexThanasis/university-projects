@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\Label;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ItemController extends Controller
 {
@@ -19,7 +20,7 @@ class ItemController extends Controller
     {
         return view('items.index', [
             // 'items' => Item::all()
-            'items' => Item::with('comments') -> get(),
+            'items' => Item::with('comments')->get(),
             'labels' => Label::all(),
             'user_count' => User::count(),
             'comments_count' => Comment::count(),
@@ -33,7 +34,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        return view('items.create', ['labels' => Label::all()]);
     }
 
     /**
@@ -44,7 +45,22 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate(
+            [
+                'name' => 'required',
+                'description' => 'required',
+                'obtained' => 'required',
+                'labels' => 'nullable',
+                'labels.*' => 'integer|distinct|exists:labels,id'
+            ]
+        );
+
+        $i = Item::create($validated);
+        $i->labels()->sync($request->labels);
+
+        Session::flash('item-created', $i->name);
+
+        return redirect()->route('home');
     }
 
     /**

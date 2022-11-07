@@ -5,19 +5,24 @@
     <div class="container mx-auto p-3 lg:px-36">
         <div class="grid grid-cols-1 lg:grid-cols-2 mb-4">
             <div>
-                <h1 class="font-bold my-4 text-4xl">Szerveroldali Blog</h1>
+                <h1 class="font-bold my-4 text-4xl">Muzeum kiallitott targyainak listaja</h1>
             </div>
             <div class="flex items-center gap-2 lg:justify-end">
                 <a href="{{ route('labels.create') }}" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
                         class="fas fa-plus-circle"></i> Új c\mke</a>
-                <a href="" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
+                <a href="{{ route('items.create') }}" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
                         class="fas fa-plus-circle"></i> Új bejegyzés</a>
             </div>
         </div>
         <div class="grid grid-cols-4 gap-6">
             <div class="col-span-4 lg:col-span-3">
-                <h2 class="font-semibold text-3xl my-2">Minden bejegyzés</h2>
+                <h2 class="font-semibold text-3xl my-2">Kiallitott targyak</h2>
                 <div class="grid grid-cols-3 gap-3">
+                    @if (Session::has('label-created'))
+                        <div class="col-span-3 bg-green-200 text-center rounded-lg py-1">
+                            A(z) {{ Session::get('label-created') }} cimke letrejott es eltarolodott
+                        </div>
+                    @endif
                     @foreach ($items as $item)
                         <div class="col-span-3 lg:col-span-1">
                             <img src={{ $item->image }}>
@@ -62,8 +67,9 @@
                         </h3>
                         <div class="flex flex-row flex-wrap gap-1 mt-3">
                             @foreach ($labels as $label)
-                                <a href="#" class="py-0.5 px-1.5 font-semibold text-white text-sm"
-                                    style="background-color: {{ $label -> color }};">{{ $label -> name }}</a>
+                                <a href="{{ route('labels.edit', $label) }}"
+                                    class="py-0.5 px-1.5 font-semibold text-white text-sm"
+                                    style="background-color: {{ $label->color }};">{{ $label->name }}</a>
                             @endforeach
                         </div>
                     </div>
@@ -72,9 +78,12 @@
                             Statisztika
                         </h3>
                         <ul class="fa-ul">
-                            <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók: {{ $user_count }}</li>
-                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Osszes kiallitott darab: {{ $items -> count() }}</li>
-                            <li><span class="fa-li"><i class="fas fa-comments"></i></span>Hozzászólások: {{ $comments_count }}</li>
+                            <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók: {{ $user_count }}
+                            </li>
+                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Osszes kiallitott darab:
+                                {{ $items->count() }}</li>
+                            <li><span class="fa-li"><i class="fas fa-comments"></i></span>Hozzászólások:
+                                {{ $comments_count }}</li>
                         </ul>
                     </div>
 

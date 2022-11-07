@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Label;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class LabelController extends Controller
 {
@@ -35,7 +36,27 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            [
+                'name' => 'required|min:3|unique:labels,name',
+                'display' => 'required',
+                'bg-color' => 'required',
+            ],
+            [
+                'name.required' => 'A nev kitoltese kotelezo!',
+                'name.min' => 'A nev legalabb :min karakter legyen',
+                'name.unique' => 'Ilyen nevu kategoria mar letezik, a nev legyen egyedi'
+            ]
+        ]);
+
+        // in case of kebab-case we must resave to snake-case like this:
+        $validated['color'] = $validated['bg-color'];
+
+        $l = Label::create($validated);
+
+        Session::flash('label-created', $l -> name);
+
+        return redirect()->route('home');
     }
 
     /**
@@ -57,7 +78,7 @@ class LabelController extends Controller
      */
     public function edit(Label $label)
     {
-        //
+        return view('labels.edit', ['label' => $label]);
     }
 
     /**
@@ -69,7 +90,25 @@ class LabelController extends Controller
      */
     public function update(Request $request, Label $label)
     {
-        //
+        $validated = $request->validate([
+            [
+                'name' => 'required|min:3|unique:labels,name',
+                'display' => 'required',
+                // 'bg-color' => 'required',
+            ],
+            [
+                'name.required' => 'A nev kitoltese kotelezo!',
+                'name.min' => 'A nev legalabb :min karakter legyen',
+                'name.unique' => 'Ilyen nevu kategoria mar letezik, a nev legyen egyedi'
+            ]
+        ]);
+
+        // in case of kebab-case we must resave to snake-case like this:
+        $validated['color'] = $validated['bg-color'];
+
+        $label -> update($validated);
+        // Label::create($validated);
+        return redirect()->route('home');
     }
 
     /**
