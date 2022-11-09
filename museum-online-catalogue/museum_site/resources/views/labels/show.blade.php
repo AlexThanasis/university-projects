@@ -1,6 +1,6 @@
 <x-guest-layout>
     <x-slot name="title">
-        Főoldal
+        {{ $label -> name }} műtárgyak
     </x-slot>
     <div class="container mx-auto p-3 lg:px-36">
         <div class="grid grid-cols-1 lg:grid-cols-2 mb-4">
@@ -8,22 +8,17 @@
                 <h1 class="font-bold my-4 text-4xl">Muzeum kiallitott targyainak listaja</h1>
             </div>
             <div class="flex items-center gap-2 lg:justify-end">
-                <a href="{{ route('labels.create') }}" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
-                        class="fas fa-plus-circle"></i> Új c\mke</a>
-                <a href="{{ route('items.create') }}" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
-                        class="fas fa-plus-circle"></i> Új bejegyzés</a>
+                <a href="{{ route('labels.edit', $label) }}" class="bg-orange-500 hover:bg-orange-700 px-2 py-1 text-white"><i
+                        class="fas fa-edit"></i> Címke szerkesztése</a>
+
             </div>
         </div>
         <div class="grid grid-cols-4 gap-6">
             <div class="col-span-4 lg:col-span-3">
-                <h2 class="font-semibold text-3xl my-2">Kiallitott targyak</h2>
+                <h2 class="font-semibold text-3xl my-2">{{ $label -> name }} címkéhez tartozó műtárgyak</h2>
                 <div class="grid grid-cols-3 gap-3">
-                    @if (Session::has('label-created'))
-                        <div class="col-span-3 bg-green-200 text-center rounded-lg py-1">
-                            A(z) {{ Session::get('label-created') }} cimke letrejott es eltarolodott
-                        </div>
-                    @endif
-                    @foreach ($items as $item)
+
+                    @forelse ($items as $item)
                         <div class="col-span-3 lg:col-span-1">
                             <img src={{ $item->image }}>
                             <div class="px-2.5 py-2 border-r border-l border-b border-gray-400 ">
@@ -43,7 +38,11 @@
                                     <i class="fas fa-angle-right"></i></button>
                             </div>
                         </div>
-                    @endforeach
+                        @empty
+                        <div class="col-span-3 bg-red-200 text-center rounded-lg py-1">
+                            Ehhez a címkéhez nincs kiállított tárgy
+                        </div>
+                    @endforelse
 
                 </div>
             </div>

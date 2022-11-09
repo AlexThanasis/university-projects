@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\Label;
+use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -40,12 +43,13 @@ class LabelController extends Controller
             [
                 'name' => 'required|min:3|unique:labels,name',
                 'display' => 'required',
-                'bg-color' => 'required',
+                'bg-color' => 'required|regex:/^#([0-9a-f]{8})$/i',
             ],
             [
-                'name.required' => 'A nev kitoltese kotelezo!',
-                'name.min' => 'A nev legalabb :min karakter legyen',
-                'name.unique' => 'Ilyen nevu kategoria mar letezik, a nev legyen egyedi'
+                'name.required' => 'A név kitöltése kötelező!',
+                'name.min' => 'A név legalább :min karakter legyen',
+                'name.unique' => 'Ilyen nevű kategória már létezik, a név legyen egyedi',
+                'bg-color.regex' => 'A szín formátuma helytelen!'
             ]
         ]);
 
@@ -67,7 +71,13 @@ class LabelController extends Controller
      */
     public function show(Label $label)
     {
-        //
+        return view('labels.show', [
+            'label' => $label,
+            'items' => $label -> items,
+            'labels' => Label::all(),
+            'user_count' => User::count(),
+            'comments_count' => Comment::count(),
+        ]);
     }
 
     /**
