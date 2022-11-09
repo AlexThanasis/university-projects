@@ -30,7 +30,7 @@
                     <label class="block font-medium text-gray-700">Kiallitott targy kepe</label>
                     <input
                         type="file"
-                        name="image_file"
+                        name="image"
                         class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300">
                     </div>
                 </div>

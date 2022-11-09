@@ -8,6 +8,7 @@ use App\Models\Label;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -20,9 +21,11 @@ class ItemController extends Controller
     {
         return view('items.index', [
             // 'items' => Item::all()
-            'items' => Item::with('comments')->get(),
+            // 'items' => Item::with('comments')->get(),
+            'items' => Item::with('comments')->paginate(9),
             'labels' => Label::all(),
             'user_count' => User::count(),
+            'item_count' => Item::count(),
             'comments_count' => Comment::count(),
         ]);
     }
@@ -51,9 +54,18 @@ class ItemController extends Controller
                 'description' => 'required',
                 'obtained' => 'required',
                 'labels' => 'nullable',
-                'labels.*' => 'integer|distinct|exists:labels,id'
+                'labels.*' => 'integer|distinct|exists:labels,id',
+                'image' => 'nullable|image',
             ]
         );
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            // hashed unique name for file
+            $fname = $file->hashName();
+            Storage::disk('public')->put('images/' . $fname, $file->get());
+            $validated['image'] = $fname;
+        }
 
         $i = Item::create($validated);
         $i->labels()->sync($request->labels);
