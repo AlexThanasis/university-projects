@@ -7,12 +7,16 @@
             <div>
                 <h1 class="font-bold my-4 text-4xl">Muzeum kiallitott targyainak listaja</h1>
             </div>
-            <div class="flex items-center gap-2 lg:justify-end">
-                <a href="{{ route('labels.create') }}" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
-                        class="fas fa-plus-circle"></i> Új c\mke</a>
-                <a href="{{ route('items.create') }}" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
-                        class="fas fa-plus-circle"></i> Új bejegyzés</a>
-            </div>
+
+            @auth()
+                <div class="flex items-center gap-2 lg:justify-end">
+                    <a href="{{ route('labels.create') }}" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
+                            class="fas fa-plus-circle"></i> Új c\mke</a>
+                    <a href="{{ route('items.create') }}" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
+                            class="fas fa-plus-circle"></i> Új bejegyzés</a>
+                </div>
+            @endauth
+            
         </div>
         <div class="grid grid-cols-4 gap-6">
             <div class="col-span-4 lg:col-span-3">
@@ -50,7 +54,7 @@
                             </div>
                         </div>
                     @endforeach
-                    {{ $items -> links() }}
+                    {{ $items->links() }}
                 </div>
             </div>
             <div class="col-span-4 lg:col-span-1">

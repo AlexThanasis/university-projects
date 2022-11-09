@@ -7,8 +7,10 @@ use App\Models\Item;
 use App\Models\Label;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Queue\RedisQueue;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
@@ -37,6 +39,8 @@ class ItemController extends Controller
      */
     public function create()
     {
+        if (!Auth::user())
+            return redirect() -> route('login');
         return view('items.create', ['labels' => Label::all()]);
     }
 
@@ -48,6 +52,8 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user())
+            return abort(403);
         $validated = $request->validate(
             [
                 'name' => 'required',
