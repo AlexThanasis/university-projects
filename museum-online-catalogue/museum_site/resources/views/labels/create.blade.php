@@ -11,9 +11,7 @@
                     class="fas fa-long-arrow-alt-left"></i> Vissza a bejegyzésekhez</a>
         </div>
 
-        <form
-        x-data="{ labelName: '{{ old('name', '') }}', bgColor: '{{ old('bg-color', '#ff9910ff')}}', textColor: '{{ old('text-color', '#ffffffff')}}' }"
-        x-init="() => {
+        <form x-data="{ labelName: '{{ old('name', '') }}', bgColor: '{{ old('bg-color', '#ff9910ff') }}', textColor: '{{ old('text-color', '#ffffffff') }}' }" x-init="() => {
             new Picker({
                 color: bgColor,
                 popup: 'bottom',
@@ -26,10 +24,8 @@
                 parent: $refs.textColorPicker,
                 onDone: (color) => textColor = color.hex
             });
-        }"
-        action="{{ route('labels.store') }}"
-        method="POST">
-        @csrf
+        }" action="{{ route('labels.store') }}" method="POST">
+            @csrf
             <div class="grid grid-cols-4 gap-6">
                 <div class="col-span-4 lg:col-span-2 grid grid-cols-2 gap-3">
                     <div class="col-span-2">
@@ -46,6 +42,9 @@
                         <div x-ref="bgColorPicker" id="bg-color-picker" class="mt-1 h-8 w-full border border-black"
                             :style="`background-color: ${bgColor};`"></div>
                         <p x-text="bgColor"></p>
+                        @error('name')
+                            <div class="font-medium text-red-500">{{ $message }}</div>
+                        @enderror
                     </div>
                     {{-- <div class="col-span-2 lg:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">Display</label>
@@ -71,7 +70,7 @@
 
             <input type="hidden" id="bg-color" name="bg-color" x-model="bgColor" />
             <input type="hidden" id="text-color" name="text-color" x-model="textColor" />
-            <input type="checkbox" id="display" name="display" checked/>
+            <input type="checkbox" id="display" name="display" checked />
 
             <button type="submit"
                 class="mt-6 bg-blue-500 hover:bg-blue-600 text-gray-100 font-semibold px-2 py-1 text-xl">Létrehozás</button>
