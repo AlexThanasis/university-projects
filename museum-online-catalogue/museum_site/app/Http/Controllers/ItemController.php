@@ -7,7 +7,6 @@ use App\Models\Item;
 use App\Models\Label;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Queue\RedisQueue;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -89,7 +88,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+        return view('items.show', ['item' => $item]);
     }
 
     /**

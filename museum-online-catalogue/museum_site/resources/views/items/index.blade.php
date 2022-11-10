@@ -16,7 +16,7 @@
                             class="fas fa-plus-circle"></i> Új bejegyzés</a>
                 </div>
             @endauth
-            
+
         </div>
         <div class="grid grid-cols-4 gap-6">
             <div class="col-span-4 lg:col-span-3">
@@ -48,8 +48,11 @@
                                     {{-- <hr>
                                 {{ Str::limit($item -> comment, 200) }} --}}
                                 </p>
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-600 px-1.5 py-1 text-white mt-3 font-semibold">Megnezem
+                                <button class="bg-blue-500 hover:bg-blue-600 px-1.5 py-1 text-white mt-3 font-semibold">
+                                    <a href="{{ route('items.show', $item) }}"
+                                        class="py-0.5 px-1.5 font-semibold text-white text-sm">
+                                        Megnézem</a>
+
                                     <i class="fas fa-angle-right"></i></button>
                             </div>
                         </div>
