@@ -6,8 +6,6 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 mb-4">
             <div>
                 <h1 class="font-bold my-4 text-4xl">{{ $item->name }}</h1>
-            </div>
-            <div>
                 <h3 class="text-xl mb-0.5 font-semibold">
                     {{ $item->name }}
                 </h3>
@@ -27,8 +25,14 @@
                 </p>
 
                 @auth
-                <a href="{{ route('items.destroy', $item) }}" class="bg-red-500 hover:bg-red-700 px-2 py-1 text-white"><i
-                    class="fas fa-trash"></i> Kiállított tárgy törlése</a>
+                    <form action="{{ route('items.destroy', $item) }}" method="post" id="delete-form">
+                        @csrf
+                        @method('DELETE')
+                        <a href="{{ route('items.destroy', $item) }}"
+                            onclick="event.preventDefault(); document.querySelector('#delete-form').submit();"
+                            class="bg-red-500 hover:bg-red-700 px-2 py-1 text-grey"><i class="fas fa-trash"></i> Kiállított
+                            tárgy törlése</a>
+                    </form>
                 @endauth
             </div>
             {{-- <img src={{ $item->image }}> --}}
@@ -75,9 +79,9 @@
                 </div>
             </div>
             <div class="col-span-4 lg:col-span-1">
-                <h2 class="font-semibold text-3xl my-2">Menü</h2>
+                {{-- <h2 class="font-semibold text-3xl my-2">Menü</h2> --}}
                 <div class="grid grid-cols-1 gap-3">
-                    <div class="border px-2.5 py-2 border-gray-400">
+                    {{-- <div class="border px-2.5 py-2 border-gray-400">
                         <form>
                             <label for="name" class="block font-medium text-xl text-gray-700">Keresés</label>
                             <input type="text" name="name" id="name"
@@ -87,24 +91,28 @@
                                 class="mt-3 bg-blue-500 hover:bg-blue-600 text-gray-100 font-semibold px-2 py-1"><i
                                     class="fas fa-search"></i> Keresés</button>
                         </form>
-                    </div>
+                    </div> --}}
                     <div class="border px-2.5 py-2 border-gray-400">
                         <h3 class="mb-0.5 text-xl font-semibold">
-                            Kategóriák
+                            Címkék
                         </h3>
                         <div class="flex flex-row flex-wrap gap-1 mt-3">
-                            @foreach ($item->labels as $label)
+                            @forelse ($item->labels as $label)
                                 <a href="{{ route('labels.show', $label) }}"
                                     class="py-0.5 px-1.5 font-semibold text-white text-sm"
                                     style="background-color: {{ $label->color }};">{{ $label->name }}</a>
-                            @endforeach
+                            @empty
+                                <div class="col-span-3 bg-red-200 text-center rounded-lg py-1">
+                                    Ehhez a műtárgyhoz nincsek címkék
+                                </div>
+                            @endforelse
                         </div>
                     </div>
-                    <div class="border px-2.5 py-2 border-gray-400">
+                    {{-- <div class="border px-2.5 py-2 border-gray-400">
                         <h3 class="mb-0.5 text-xl font-semibold">
                             Statisztika
                         </h3>
-                        {{-- <ul class="fa-ul">
+                        <ul class="fa-ul">
                             <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók:
                                 {{ $user_count }}
                             </li>
@@ -112,8 +120,8 @@
                                 {{ $items->count() }}</li>
                             <li><span class="fa-li"><i class="fas fa-comments"></i></span>Hozzászólások:
                                 {{ $comments_count }}</li>
-                        </ul> --}}
-                    </div>
+                        </ul>
+                    </div> --}}
 
                 </div>
             </div>
