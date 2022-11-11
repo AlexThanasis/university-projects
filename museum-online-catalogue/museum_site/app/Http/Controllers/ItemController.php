@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Monolog\Handler\PushoverHandler;
 
 class ItemController extends Controller
 {
@@ -39,7 +40,7 @@ class ItemController extends Controller
     public function create()
     {
         if (!Auth::user())
-            return redirect() -> route('login');
+            return redirect()->route('login');
         return view('items.create', ['labels' => Label::all()]);
     }
 
@@ -88,7 +89,15 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return view('items.show', ['item' => $item]);
+        $shown_labels = [];
+        foreach ($item->labels as $label) {
+            if ($label->display)
+                array_push($shown_labels, $label);
+        };
+        return view('items.show', [
+            'item' => $item,
+            'shown_labels' => $shown_labels,
+        ]);
     }
 
     /**
@@ -122,8 +131,8 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        $this -> authorize('delete', $item);
-        $item -> delete();
-        return redirect() -> route('home');
+        $this->authorize('delete', $item);
+        $item->delete();
+        return redirect()->route('home');
     }
 }

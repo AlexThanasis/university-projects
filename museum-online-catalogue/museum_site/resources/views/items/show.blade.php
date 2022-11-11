@@ -31,14 +31,17 @@
 
                 @can('delete', $item)
                     {{-- @auth --}}
+                    <br>
                     <form action="{{ route('items.destroy', $item) }}" method="post" id="delete-form">
                         @csrf
                         @method('DELETE')
                         <a href="{{ route('items.destroy', $item) }}"
                             onclick="event.preventDefault(); document.querySelector('#delete-form').submit();"
-                            class="bg-red-500 hover:bg-red-700 px-2 py-1 text-grey"><i class="fas fa-trash"></i> Kiállított
+                            class="bg-red-500 hover:bg-red-700 rounded-full px-2 py-1 text-grey"><i
+                                class="fas fa-trash"></i> Kiállított
                             tárgy törlése</a>
                     </form>
+                    <br>
                     {{-- @endauth --}}
                 @endcan
 
@@ -73,15 +76,13 @@
                         Címkék
                     </h3>
                     <div class="flex flex-row flex-wrap gap-1 mt-3">
-                        @forelse ($item->labels as $label)
-                            @if ($label->display)
-                                <a href="{{ route('labels.show', $label) }}"
-                                    class="py-0.5 px-1.5 font-semibold text-white text-sm"
-                                    style="background-color: {{ $label->color }};">{{ $label->name }}</a>
-                            @endif
+                        @forelse ($shown_labels as $label)
+                            <a href="{{ route('labels.show', $label) }}"
+                                class="py-0.5 px-1.5 font-semibold text-white text-sm"
+                                style="background-color: {{ $label->color }};">{{ $label->name }}</a>
                         @empty
                             <div class="col-span-3 bg-red-200 text-center rounded-lg py-1">
-                                Ehhez a műtárgyhoz nincsek címkék
+                                Ehhez a műtárgyhoz nincsek megjeleníthető címkék
                             </div>
                         @endforelse
                     </div>
