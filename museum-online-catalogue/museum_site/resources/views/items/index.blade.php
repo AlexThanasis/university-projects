@@ -5,13 +5,13 @@
     <div class="container mx-auto p-3 lg:px-36">
         <div class="grid grid-cols-1 lg:grid-cols-2 mb-4">
             <div>
-                <h1 class="font-bold my-4 text-4xl">Muzeum kiallitott targyainak listaja</h1>
+                <h1 class="font-bold my-4 text-4xl">Múzeum kiállított tárgyainak listája</h1>
             </div>
 
             @auth()
                 <div class="flex items-center gap-2 lg:justify-end">
                     <a href="{{ route('labels.create') }}" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
-                            class="fas fa-plus-circle"></i> Új c\mke</a>
+                            class="fas fa-plus-circle"></i> Új címke</a>
                     <a href="{{ route('items.create') }}" class="bg-green-500 hover:bg-green-700 px-2 py-1 text-white"><i
                             class="fas fa-plus-circle"></i> Új bejegyzés</a>
                 </div>
@@ -20,11 +20,11 @@
         </div>
         <div class="grid grid-cols-4 gap-6">
             <div class="col-span-4 lg:col-span-3">
-                <h2 class="font-semibold text-3xl my-2">Kiallitott targyak</h2>
+                <h2 class="font-semibold text-3xl my-2">Kiállított tárgyak</h2>
                 <div class="grid grid-cols-3 gap-3">
                     @if (Session::has('label-created'))
                         <div class="col-span-3 bg-green-200 text-center rounded-lg py-1">
-                            A(z) {{ Session::get('label-created') }} cimke letrejott es eltarolodott
+                            A(z) {{ Session::get('label-created') }} címke létrejött és eltárolódott
                         </div>
                     @endif
                     @foreach ($items as $item)
@@ -44,7 +44,7 @@
                                     <span class="mr-2"><i class="fas fa-user"></i>{{ $item->obtained }}</span>
                                 </h4>
                                 <p class="text-gray-600 mt-1">
-                                    {{ Str::limit($item->description, 200) }}
+                                    {{ Str::limit($item->description, 120) }}
                                     {{-- <hr>
                                 {{ Str::limit($item -> comment, 200) }} --}}
                                 </p>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="border px-2.5 py-2 border-gray-400">
                         <h3 class="mb-0.5 text-xl font-semibold">
-                            Kategóriák
+                            Címkék
                         </h3>
                         <div class="flex flex-row flex-wrap gap-1 mt-3">
                             @foreach ($labels as $label)
