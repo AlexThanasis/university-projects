@@ -5,7 +5,7 @@
     <div class="container mx-auto p-3 lg:px-36">
         <div class="grid grid-cols-4 gap-6">
             <div class="col-span-4 lg:col-span-3">
-                <div>
+                <div md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800>
                     <h1 class="font-bold my-4 text-4xl">{{ $item->name }}</h1>
                 </div>
                 <div>
@@ -16,13 +16,13 @@
                         <span class="mr-2"><i class="fas fa-user"></i>{{ $item->obtained }}</span>
                     </h4>
                     @if ($item->image === null)
-                        <img
+                        <img class="w-50 h-50 rounded-full mx-auto"
                             src="https://cdn.rebrickable.com/media/thumbs/parts/elements/300121.jpg/250x250p.jpg?1658326879.2519205">
                         {{-- <img src="{{ Storage::url('images/basic_lego_if_no_picture_uploaded.jpeg') }}"> --}}
                     @elseif ($item->image !== null && strpos($item->image, 'http') !== false)
-                        <img src={{ $item->image }}>
+                        <img class="w-50 h-50 rounded-full mx-auto" src={{ $item->image }}>
                     @else
-                        <img src={{ Storage::url('images/' . $item->image) }}>
+                        <img class="w-50 h-50 rounded-full mx-auto" src={{ Storage::url('images/' . $item->image) }}>
                     @endif
                     <p class="text-gray-600 mt-1">
                         {!! str_replace('\n\n', '<br>', $item->description) !!}

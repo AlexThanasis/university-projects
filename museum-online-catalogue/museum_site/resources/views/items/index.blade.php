@@ -30,18 +30,18 @@
                     @foreach ($items as $item)
                         <div class="col-span-3 lg:col-span-1">
                             @if ($item->image === null)
-                                <img src="{{ Storage::url('images/basic_lego_if_no_picture_uploaded.jpeg') }}">
+                                <img class="w-40 h-40 rounded-full mx-auto" src="{{ Storage::url('images/basic_lego_if_no_picture_uploaded.jpeg') }}">
                             @elseif ($item->image !== null && strpos($item->image, 'http') !== false)
-                                <img src={{ $item->image }}>
+                                <img class="w-40 h-40 rounded-full mx-auto" src={{ $item->image }}>
                             @else
-                                <img src={{ Storage::url('images/' . $item->image) }}>
+                                <img class="w-40 h-40 rounded-full mx-auto" src={{ Storage::url('images/' . $item->image) }}>
                             @endif
                             <div class="px-2.5 py-2 border-r border-l border-b border-gray-400 ">
                                 <h3 class="text-xl mb-0.5 font-semibold">
                                     {{ $item->name }}
                                 </h3>
                                 <h4 class="text-gray-400">
-                                    <span class="mr-2"><i class="fas fa-user"></i>{{ $item->obtained }}</span>
+                                    <span class="mr-2"><i class="fas fa-calendar-days"></i> {{ $item->obtained }}</span>
                                 </h4>
                                 <p class="text-gray-600 mt-1">
                                     {{ Str::limit($item->description, 120) }}
@@ -96,7 +96,7 @@
                             <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók:
                                 {{ $user_count }}
                             </li>
-                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Összes kiállított darab:
+                            <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Kiállított tárgyak:
                                 {{ $item_count }}</li>
                             <li><span class="fa-li"><i class="fas fa-comments"></i></span>Hozzászólások:
                                 {{ $comments_count }}</li>
