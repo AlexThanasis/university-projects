@@ -80,9 +80,11 @@
                         </h3>
                         <div class="flex flex-row flex-wrap gap-1 mt-3">
                             @foreach ($labels as $label)
-                                <a href="{{ route('labels.show', $label) }}"
-                                    class="py-0.5 px-1.5 font-semibold text-white text-sm"
-                                    style="background-color: {{ $label->color }};">{{ $label->name }}</a>
+                                @if ($label->display)
+                                    <a href="{{ route('labels.show', $label) }}"
+                                        class="py-0.5 px-1.5 font-semibold text-white text-sm"
+                                        style="background-color: {{ $label->color }};">{{ $label->name }}</a>
+                                @endif
                             @endforeach
                         </div>
                     </div>
