@@ -28,14 +28,14 @@
                     </div>
                     <div class="w-full">
                         <label class="block font-medium text-gray-700">Kiállított tárgy képe</label>
-                        <input type="file" name="image" value="{{ $item->image }}"
+                        <input type="file" name="image" value=""
                             class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300">
                     </div>
                 </div>
                 <div class="w-full">
                     <label class="block font-medium text-gray-700">Kiállított tárgy katalógusbeli felvételi
                         időpontja</label>
-                    <input type="date" id="obtained" name="obtained" value="{{ $item->obtained }}"
+                    <input type="date" id="obtained" name="obtained" value="2022-11-01"
                         class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300">
                 </div>
             </div>
@@ -53,7 +53,8 @@
                 <label class="block font-medium text-gray-700">Hozzászólások</label>
                 <div class="flex flex-row pb-1">
                     @forelse ($item->comments as $comment)
-                        <input type="checkbox" class="my-0.5 mx-1" name="comments[]" value="{{ $comment->id }}" checked>
+                        <input type="checkbox" class="my-0.5 mx-1" name="comments[]" value="{{ $comment->id }}"
+                            checked>
                         <div class="border px-2.5 py-2 border-gray-400">
                             <h4 class="text-xl font-semibold">
                                 {{ $comment->user_id }}
@@ -72,67 +73,11 @@
                     @endforelse
                 </div>
             </div>
+            <button type="submit"
+                class="mt-6 bg-green-500 hover:bg-green-600 rounded-xl text-gray-100 font-semibold px-2 py-1 text-xl">Elmentés</button>
+        </form>
     </div>
 
-    <button type="submit"
-        class="mt-6 bg-blue-500 hover:bg-blue-600 text-gray-100 font-semibold px-2 py-1 text-xl">Létrehozás</button>
-    </form>
 
-    {{-- <form x-data="{ labelName: '{{ old('name', $item->name) }}', bgColor: '{{ old('bg-color', $label->bg_color) }}', textColor: '{{ old('text-color', $label->text_color) }}' }" x-init="() => {
-        new Picker({
-            color: bgColor,
-            popup: 'bottom',
-            parent: $refs.bgColorPicker,
-            onDone: (color) => bgColor = color.hex
-        });
-        new Picker({
-            color: textColor,
-            popup: 'bottom',
-            parent: $refs.textColorPicker,
-            onDone: (color) => textColor = color.hex
-        });
-    }" actions="{{ route('labels.update') }}" method="POST">
-        @csrf
-        @method('PATCH')
-        <div class="grid grid-cols-4 gap-6">
-            <div class="col-span-4 lg:col-span-2 grid grid-cols-2 gap-3">
-                <div class="col-span-2">
-                    <label for="name" class="block font-medium text-gray-700">Cimke neve</label>
-                    <input type="text" name="name" id="name"
-                        class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300"
-                        x-model="labelName">
-                    @error('name')
-                        <div class="font-medium text-red-500">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="col-span-2 lg:col-span-1">
-                    <label class="block text-sm font-medium text-gray-700">Háttér színe</label>
-                    <div x-ref="bgColorPicker" id="bg-color-picker" class="mt-1 h-8 w-full border border-black"
-                        :style="`background-color: ${bgColor};`"></div>
-                    <p x-text="bgColor"></p>
-                </div>
-                <div class="col-span-2 lg:col-span-1">
-                    <label class="block text-sm font-medium text-gray-700">Szöveg színe</label>
-                    <div x-ref="textColorPicker" id="text-color-picker" class="mt-1 h-8 w-full border border-black"
-                        :style="`background-color: ${textColor};`"></div>
-                    <p x-text="textColor"></p>
-                </div>
-            </div>
-            <div class="col-span-4 lg:col-span-2">
-                <div x-show="labelName.length > 0">
-                    <label class="block font-medium text-gray-700 mb-1">Előnézet</label>
-                    <span x-text="labelName" :style="`background-color: ${bgColor}; color: ${textColor}`"
-                        class="py-0.5 px-1.5 font-semibold"></span>
-                </div>
-            </div>
-        </div>
-
-        <input type="hidden" id="bg-color" name="bg-color" x-model="bgColor" />
-        <input type="hidden" id="text-color" name="text-color" x-model="textColor" />
-        <input type="checkbox" id="display" name="display" checked />
-
-        <button type="submit"
-            class="mt-6 bg-blue-500 hover:bg-blue-600 text-gray-100 font-semibold px-2 py-1 text-xl">Létrehozás</button>
-    </form> --}}
     </div>
 </x-guest-layout>

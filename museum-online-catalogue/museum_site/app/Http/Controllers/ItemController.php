@@ -21,8 +21,6 @@ class ItemController extends Controller
     public function index()
     {
         return view('items.index', [
-            // 'items' => Item::all()
-            // 'items' => Item::with('comments')->get(),
             'items' => Item::orderBy('obtained', 'desc')->paginate(9),
             'labels' => Label::all(),
             'user_count' => User::count(),
@@ -38,9 +36,6 @@ class ItemController extends Controller
      */
     public function create()
     {
-        // $user = Auth::user();
-        // $this->authorize('create', $user);
-
         if (!Auth::user())
             return redirect()->route('login');
         if (Auth::user() && !Auth::user()->is_admin)
@@ -129,26 +124,37 @@ class ItemController extends Controller
     {
         $validated = $request->validate(
             [
-                'name' => 'required',
+                'name' => 'required|min:3',
                 'description' => 'required',
                 'obtained' => 'required',
                 'labels' => 'nullable',
                 'labels.*' => 'integer|distinct|exists:labels,id',
-                'comments' => 'nullable',
-                'comments.*' => 'integer|distinct|exists:comments,id',
+                // 'comments' => 'nullable',
+                // 'comments.*' => 'integer|distinct|exists:comments,id',
                 'image' => 'nullable|image',
             ],
             [
                 'name.required' => 'A név kitöltése kötelező!',
                 'name.min' => 'A név legalább :min karakter legyen',
-                'name.unique' => 'Ilyen nevű kategória már létezik, a név legyen egyedi',
                 'description.required' => 'A részletezése a tárgynak kötelező',
                 'obtained.required' => 'A kiállítása dátumának megadása kötelező',
+                'image.image' => 'A képnek kép formátumúnak kell lennie'
             ]
         );
 
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            // hashed unique name for file
+            $fname = $file->hashName();
+            Storage::disk('public')->put('images/' . $fname, $file->get());
+            $validated['image'] = $fname;
+        }
+
+        // Session::flash('item-created', $item->name);
+
+        $item->labels()->sync($request->labels);
         $item->update($validated);
-        
+
         return redirect()->route('home');
     }
 
