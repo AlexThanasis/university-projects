@@ -28,7 +28,7 @@
                     </div>
                     <div class="w-full">
                         <label class="block font-medium text-gray-700">Kiállított tárgy képe</label>
-                        <input type="file" name="image" value=""
+                        <input type="file" name="image"
                             class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300">
                     </div>
                 </div>

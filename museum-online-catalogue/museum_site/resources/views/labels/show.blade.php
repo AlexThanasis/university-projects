@@ -9,14 +9,15 @@
             </div>
             <div class="flex items-center gap-2 lg:justify-end">
                 <a href="{{ route('labels.edit', $label) }}"
-                    class="bg-orange-500 hover:bg-orange-700 px-2 py-1 text-white"><i class="fas fa-edit"></i> Címke
+                    class="bg-orange-500 rounded-xl hover:bg-orange-700 px-2 py-1 text-white"><i class="fas fa-edit"></i> Címke
                     szerkesztése</a>
-
             </div>
         </div>
         <div class="grid grid-cols-4 gap-6">
             <div class="col-span-4 lg:col-span-3">
                 <h2 class="font-semibold text-3xl my-2">{{ $label->name }} címkéhez tartozó műtárgyak</h2>
+                <a href="/" class="text-blue-400 hover:text-blue-600 hover:underline"><i
+                    class="fas fa-long-arrow-alt-left"></i> Vissza a bejegyzésekhez</a>
                 <div class="grid grid-cols-3 gap-3">
 
                     @forelse ($items as $item)
