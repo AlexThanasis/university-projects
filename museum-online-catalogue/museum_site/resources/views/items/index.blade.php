@@ -12,10 +12,10 @@
                 @if (Auth::user() -> is_admin)
                     <div class="flex items-center gap-2 lg:justify-end">
                         <a href="{{ route('labels.create') }}"
-                            class="bg-green-500 rounded-lg hover:bg-green-700 px-2 py-1 text-white"><i
+                            class="bg-slate-800 rounded-lg hover:bg-slate-800 px-2 py-1 text-white"><i
                                 class="fas fa-plus-circle"></i> Új címke</a>
                         <a href="{{ route('items.create') }}"
-                            class="bg-green-500 rounded-lg hover:bg-green-700 px-2 py-1 text-white"><i
+                            class="bg-slate-800 rounded-lg hover:bg-slate-700 px-2 py-1 text-white"><i
                                 class="fas fa-plus-circle"></i> Új bejegyzés</a>
                     </div>
                 @endif

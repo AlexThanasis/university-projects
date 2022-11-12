@@ -24,7 +24,7 @@ class ItemController extends Controller
         return view('items.index', [
             // 'items' => Item::all()
             // 'items' => Item::with('comments')->get(),
-            'items' => Item::with('comments')->paginate(9),
+            'items' => Item::orderBy('obtained', 'desc')->paginate(9),
             'labels' => Label::all(),
             'user_count' => User::count(),
             'item_count' => Item::count(),
