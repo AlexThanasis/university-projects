@@ -19,10 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [ItemController::class, 'index']) -> name('home');
 
 Route::resource('/items', ItemController::class);
-Route::resource('/comments', CommentController::class);
+// Route::resource('comments', CommentController::class);
+Route::resource('items.comments', CommentController::class)->shallow();
 Route::resource('/labels', LabelController::class);
-
-// Route::post('/labels', [LabelController::class, 'store']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

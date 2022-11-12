@@ -9,7 +9,7 @@
             </div>
 
             @auth()
-                @if (Auth::user() -> is_admin)
+                @if (Auth::user()->is_admin)
                     <div class="flex items-center gap-2 lg:justify-end">
                         <a href="{{ route('labels.create') }}"
                             class="bg-slate-800 rounded-lg hover:bg-slate-800 px-2 py-1 text-white"><i
@@ -29,6 +29,11 @@
                     @if (Session::has('label-created'))
                         <div class="col-span-3 bg-green-200 text-center rounded-lg py-1">
                             A(z) {{ Session::get('label-created') }} címke létrejött és eltárolódott
+                        </div>
+                    @endif
+                    @if (Session::has('item-created'))
+                        <div class="col-span-3 bg-green-200 text-center rounded-lg py-1">
+                            A(z) {{ Session::get('item-created') }} kiállított tárgy fel lett véve és eltárolódott
                         </div>
                     @endif
                     @foreach ($items as $item)

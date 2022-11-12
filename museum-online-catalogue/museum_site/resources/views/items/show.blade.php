@@ -8,6 +8,11 @@
                 <div md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800>
                     <h1 class="font-bold my-4 text-4xl">{{ $item->name }}</h1>
                 </div>
+                @if (Session::has('comment-created'))
+                    <div class="col-span-3 bg-green-200 text-center rounded-lg py-1">
+                        A(z) {{ Session::get('comment-created') }} felhasználó új hozzászólása fel lett véve és eltárolódott
+                    </div>
+                @endif
                 <div>
                     <a href="/" class="text-blue-400 hover:text-blue-600 hover:underline"><i
                             class="fas fa-long-arrow-alt-left"></i> Vissza a bejegyzésekhez</a>
@@ -32,52 +37,69 @@
                     </p>
                 </div>
 
-                @can('delete', $item)
+                @auth
                     <br>
                     <div class="flex-auto flex space-x-4">
-                        {{-- @auth --}}
+                        <button
+                            onclick="event.preventDefault(); document.querySelector('#new-comment').classList.toggle('hidden');"
+                            class="bg-slate-700
+                            hover:bg-slate-800 rounded-full px-2 py-1 text-white">
+                            <i class="fas fa-comments"></i> Hozzászólok a kiállított tárgyhoz</button>
 
-                        <a href="{{ route('items.edit', $item) }}"
-                            class="bg-amber-500 hover:bg-amber-700 rounded-full px-2 py-1 text-white"><i
-                                class="fas fa-edit"></i> Kiállított tárgy
-                            szerkesztése</a>
+                        @can('delete', $item)
+                            <a href="{{ route('items.edit', $item) }}"
+                                class="bg-amber-500 hover:bg-amber-700 rounded-full px-2 py-1 text-white"><i
+                                    class="fas fa-edit"></i> Kiállított tárgy
+                                szerkesztése</a>
 
-                        <form action="{{ route('items.destroy', $item) }}" method="post" id="delete-form">
-                            @csrf
-                            @method('DELETE')
-                            <a href="{{ route('items.destroy', $item) }}"
-                                onclick="event.preventDefault(); document.querySelector('#delete-form').submit();"
-                                class="bg-red-700 hover:bg-red-800 rounded-full px-2 py-1 text-white"><i
-                                    class="fas fa-trash"></i> Kiállított
-                                tárgy törlése</a>
-                        </form>
+                            <form action="{{ route('items.destroy', $item) }}" method="post" id="delete-form">
+                                @csrf
+                                @method('DELETE')
+                                <a href="{{ route('items.destroy', $item) }}"
+                                    onclick="event.preventDefault(); document.querySelector('#delete-form').submit();"
+                                    class="bg-red-700 hover:bg-red-800 rounded-full px-2 py-1 text-white"><i
+                                        class="fas fa-trash"></i> Kiállított
+                                    tárgy törlése</a>
+                            </form>
+                        @endcan
                     </div>
                     <br>
-                    {{-- @endauth --}}
-                @endcan
+                @endauth
 
                 <div class="border px-2.5 py-2 border-gray-400">
                     <h3 class="mb-0.5 text-xl font-semibold">
                         Hozzászólások
                     </h3>
+
+                    <div class="flex flex-row flex-wrap gap-1 mt-3 hidden" id="new-comment">
+                        <form action="" method="post">
+                            <textarea placeholder="Új hozzászólását írja ide" name="new-comment" cols="60" rows="5"></textarea>
+                            <a href="{{ route('comments.store', $item) }}"
+                                class="bg-slate-700 hover:bg-slate-800 rounded-full px-2 py-1 text-white"><i
+                                    class="fas fa-edit"></i> Elmentés</a>
+                        </form>
+                    </div>
+
                     <div class="flex flex-row flex-wrap gap-1 mt-3">
-                        @forelse ($item->comments as $comment)
-                            <div class="border px-2.5 py-2 border-gray-400">
-                                <h4 class="text-xl font-semibold">
-                                    {{ $comment->user_id }}
-                                </h4>
-                                <h5>
-                                    {{ $comment->created_at }}
-                                </h5>
-                                <p class="col-span-3 bg-gray-100 text-justify rounded-lg py-1">
-                                    {!! str_replace('\n\n', '<br>', $comment->text) !!}
-                                </p>
-                            </div>
-                        @empty
-                            <div class="col-span-3 bg-red-200 text-center rounded-lg py-1">
-                                Ehhez a műtárgyhoz nincsek hozzászólások
-                            </div>
-                        @endforelse
+                        <div class="comments-section">
+                            @forelse ($item->comments as $comment)
+                                <div class="border px-2.5 py-2 border-gray-400">
+                                    <h4 class="text-xl font-semibold">
+                                        {{ $comment->user_id }}
+                                    </h4>
+                                    <h5>
+                                        {{ $comment->created_at }}
+                                    </h5>
+                                    <p class="col-span-3 bg-gray-100 text-justify rounded-lg py-1">
+                                        {!! str_replace('\n\n', '<br>', $comment->text) !!}
+                                    </p>
+                                </div>
+                            @empty
+                                <div class="col-span-3 bg-red-200 text-center rounded-lg py-1">
+                                    Ehhez a műtárgyhoz nincsek hozzászólások
+                                </div>
+                            @endforelse
+                        </div>
                     </div>
                 </div>
             </div>

@@ -160,7 +160,7 @@ class ItemController extends Controller
             $validated['image'] = $fname;
         }
 
-        // Session::flash('item-created', $item->name);
+        Session::flash('item-created', $item->name);
 
         $item->labels()->sync($request->labels);
         $item->update($validated);
