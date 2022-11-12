@@ -9,6 +9,9 @@
                     <h1 class="font-bold my-4 text-4xl">{{ $item->name }}</h1>
                 </div>
                 <div>
+                    <a href="/" class="text-blue-400 hover:text-blue-600 hover:underline"><i
+                            class="fas fa-long-arrow-alt-left"></i> Vissza a bejegyzésekhez</a>
+
                     <h3 class="text-xl mb-0.5 font-semibold">
                         {{ $item->name }}
                     </h3>

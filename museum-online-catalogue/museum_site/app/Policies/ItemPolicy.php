@@ -41,7 +41,7 @@ class ItemPolicy
      */
     public function create(User $user)
     {
-        //
+        return ($user !== null && $user -> is_admin);
     }
 
     /**
@@ -53,7 +53,7 @@ class ItemPolicy
      */
     public function update(User $user, Item $item)
     {
-        //
+        return ($user !== null && $user -> is_admin);
     }
 
     /**

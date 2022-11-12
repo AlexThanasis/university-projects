@@ -51,9 +51,9 @@
                                 <p class="text-gray-600 mt-1">
                                     {{ Str::limit($item->description, 120) }}
                                 </p>
-                                <button class="bg-blue-500 hover:bg-blue-600 px-1.5 py-1 text-white mt-3 font-semibold">
+                                <button class="bg-blue-500 hover:bg-blue-600 px-1.5 py-1 text-white mt-3 rounded-lg font-semibold">
                                     <a href="{{ route('items.show', $item) }}"
-                                        class="py-0.5 px-1.5 rounded-lg font-semibold text-white text-sm">
+                                        class="py-0.5 px-1.5 font-semibold text-white text-sm">
                                         Megnézem</a>
 
                                     <i class="fas fa-angle-right"></i></button>

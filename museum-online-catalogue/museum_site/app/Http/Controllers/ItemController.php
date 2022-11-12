@@ -39,8 +39,13 @@ class ItemController extends Controller
      */
     public function create()
     {
+        // $user = Auth::user();
+        // $this->authorize('create', $user);
+
         if (!Auth::user())
             return redirect()->route('login');
+        if (Auth::user() && !Auth::user()->is_admin)
+            return abort(403);
         return view('items.create', ['labels' => Label::all()]);
     }
 
@@ -52,7 +57,7 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::user())
+        if (!Auth::user() || Auth::user() && !Auth::user()->is_admin)
             return abort(403);
         $validated = $request->validate(
             [
