@@ -39,7 +39,13 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        $out->writeln("Hello from Terminal");
+
+        $out->writeln($request['name']);
+        $out->writeln($request['bg-color']);
+        $out->writeln($request['display']);
+        $validated = $request->validate(
             [
                 'name' => 'required|min:3|unique:labels,name',
                 'display' => 'required',
@@ -51,14 +57,14 @@ class LabelController extends Controller
                 'name.unique' => 'Ilyen nevű kategória már létezik, a név legyen egyedi',
                 'bg-color.regex' => 'A szín formátuma helytelen!'
             ]
-        ]);
+        );
 
         // in case of kebab-case we must resave to snake-case like this:
         $validated['color'] = $validated['bg-color'];
 
         $l = Label::create($validated);
 
-        Session::flash('label-created', $l -> name);
+        Session::flash('label-created', $l->name);
 
         return redirect()->route('home');
     }
@@ -73,7 +79,7 @@ class LabelController extends Controller
     {
         return view('labels.show', [
             'label' => $label,
-            'items' => $label -> items,
+            'items' => $label->items,
             'labels' => Label::all(),
             'user_count' => User::count(),
             'comments_count' => Comment::count(),
@@ -116,7 +122,7 @@ class LabelController extends Controller
         // in case of kebab-case we must resave to snake-case like this:
         $validated['color'] = $validated['bg-color'];
 
-        $label -> update($validated);
+        $label->update($validated);
         // Label::create($validated);
         return redirect()->route('home');
     }

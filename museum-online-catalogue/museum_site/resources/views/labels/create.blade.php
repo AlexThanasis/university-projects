@@ -14,12 +14,12 @@
                     class="fas fa-long-arrow-alt-left"></i> Vissza a bejegyzésekhez</a>
         </div>
 
-        <form x-data="{ labelName: '{{ old('name', '') }}', color: '{{ old('color', '#ff9910ff') }}' }" x-init="() => {
+        <form x-data="{ labelName: '{{ old('name', '') }}', bgColor: '{{ old('bg-color', '#ff9910ff') }}', display: '{{ old('display', true) }}' }" x-init="() => {
             new Picker({
-                color: color,
+                color: bgColor,
                 popup: 'bottom',
-                parent: $refs.colorPicker,
-                onDone: (color) => color = color.hex
+                parent: $refs.bgColorPicker,
+                onDone: (color) => bgColor = color.hex
             });
             {{-- new Picker({
                 color: textColor,
@@ -42,12 +42,17 @@
                     </div>
                     <div class="col-span-2 lg:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">Háttér színe</label>
-                        <div x-ref="colorPicker" id="color-picker" class="mt-1 h-8 w-full border border-black"
-                            :style="`background-color: ${color};`"></div>
-                        <p x-text="color"></p>
+                        <div x-ref="bgColorPicker" id="bg-color-picker" class="mt-1 h-8 w-full border border-black"
+                            :style="`background-color: ${bgColor};`"></div>
+                        <p x-text="bgColor"></p>
                         @error('name')
                             <div class="font-medium text-red-500">{{ $message }}</div>
                         @enderror
+                    </div>
+                    <div class="col-span-2 lg:col-span-1">
+                        <label class="block text-sm font-medium text-gray-700">Címke látható legyen</label>
+                        <input type="checkbox" id="display" name="display" x-model="display" checked>
+                        {{-- <label for="display" x-text="display"></label> --}}
                     </div>
                     {{-- <div class="col-span-2 lg:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">Display</label>
@@ -55,25 +60,20 @@
                             :style="`background-color: ${textColor};`"></div>
                         <p x-text="textColor"></p>
                     </div> --}}
-                    {{-- <div class="col-span-2 lg:col-span-1">
-                        <label class="block text-sm font-medium text-gray-700">Szöveg színe</label>
-                        <div x-ref="textColorPicker" id="text-color-picker" class="mt-1 h-8 w-full border border-black"
-                            :style="`background-color: ${textColor};`"></div>
-                        <p x-text="textColor"></p>
-                    </div> --}}
+
                 </div>
                 <div class="col-span-4 lg:col-span-2">
                     <div x-show="labelName.length > 0">
                         <label class="block font-medium text-gray-700 mb-1">Előnézet</label>
-                        <span x-text="labelName" :style="`background-color: ${color}; color: white`"
+                        <span x-text="labelName" :style="`background-color: ${bgColor}; color: white`"
                             class="py-0.5 px-1.5 font-semibold"></span>
                     </div>
                 </div>
             </div>
 
-            <input type="hidden" id="color" name="color" x-model="color" />
+            <input type="hidden" id="bg-color" name="bg-color" x-model="bgColor" />
             {{-- <input type="hidden" id="text-color" name="text-color" x-model="textColor" /> --}}
-            <input type="checkbox" id="display" name="display" checked />
+            {{-- <input type="hidden" id="display" name="display" x-model="display" /> --}}
 
             <button type="submit"
                 class="mt-6 bg-blue-500 hover:bg-blue-600 text-gray-100 font-semibold px-2 py-1 text-xl">Létrehozás</button>
