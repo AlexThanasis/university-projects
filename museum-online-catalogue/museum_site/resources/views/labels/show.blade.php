@@ -5,7 +5,7 @@
     <div class="container mx-auto p-3 lg:px-36">
         <div class="grid grid-cols-1 lg:grid-cols-2 mb-4">
             <div>
-                <h1 class="font-bold my-4 text-4xl">Muzeum kiallitott targyainak listaja</h1>
+                <h1 class="font-bold my-4 text-4xl">Múzeum kiállított tárgyainak listája</h1>
             </div>
             <div class="flex items-center gap-2 lg:justify-end">
                 <a href="{{ route('labels.edit', $label) }}" class="bg-orange-500 hover:bg-orange-700 px-2 py-1 text-white"><i
@@ -30,8 +30,6 @@
                                 </h4>
                                 <p class="text-gray-600 mt-1">
                                     {{ Str::limit($item->description, 200) }}
-                                    {{-- <hr>
-                                {{ Str::limit($item -> comment, 200) }} --}}
                                 </p>
                                 <button
                                     class="bg-blue-500 hover:bg-blue-600 px-1.5 py-1 text-white mt-3 font-semibold">Megnezem
@@ -40,7 +38,7 @@
                         </div>
                         @empty
                         <div class="col-span-3 bg-red-200 text-center rounded-lg py-1">
-                            Ehhez a címkéhez nincs kiállított tárgy
+                            Ehhez a címkéhez nincsenek kiállított tárgyak
                         </div>
                     @endforelse
 
@@ -62,7 +60,7 @@
                     </div>
                     <div class="border px-2.5 py-2 border-gray-400">
                         <h3 class="mb-0.5 text-xl font-semibold">
-                            Kategóriák
+                            Címkék
                         </h3>
                         <div class="flex flex-row flex-wrap gap-1 mt-3">
                             @foreach ($labels as $label)

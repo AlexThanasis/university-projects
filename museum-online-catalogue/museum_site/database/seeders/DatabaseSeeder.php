@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Item;
 use App\Models\Label;
 use App\Models\User;
@@ -21,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         $users = collect();
         $users -> add(User::factory()->create(
-            ['email' => 'admin@szerveroldali.hu', 'password' => 'adminpwd', 'is_admin' => true]
+            ['email' => 'admin@szerveroldali.hu', 'password' => Hash::make('adminpwd'), 'is_admin' => true]
         ));
         $n = rand(5, 10);
         for ($i = 1; $i <= $n; $i++){
@@ -37,18 +38,9 @@ class DatabaseSeeder extends Seeder
         $comments -> each(function($c) use (&$users, &$items) {
             $c -> user() -> associate($users -> random()) -> save();
             $c -> item() -> associate($items -> random()) -> save();
-            // $c -> items() -> attach($items -> random(rand(1, $items -> count())));
         });
 
-        // $labels -> each(function($l) use (&$comments, &$labels) {
-        //     // $item -> user() -> associate($users -> random()) -> save();
-        //     // $item -> comments() -> attach($comments -> random(rand(1, $comments -> count())));
-        //     $l -> labels() -> attach($comments -> random(rand(1, $comments -> count())));
-        // });
-
         $items -> each(function($item) use (&$comments, &$labels) {
-            // $item -> user() -> associate($users -> random()) -> save();
-            // $item -> comments() -> attach($comments -> random(rand(1, $comments -> count())));
             $item -> labels() -> attach($labels -> random(rand(1, $labels -> count())));
         });
 
