@@ -27,7 +27,7 @@
                 onDone: (color) => textColor = color.hex
             });
         }"
-        actions="{{ route('labels.update') }}"
+        actions="{{ route('labels.update', $label) }}"
         method="POST">
         @csrf
         @method('PATCH')

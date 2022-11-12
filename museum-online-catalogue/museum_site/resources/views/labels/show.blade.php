@@ -1,6 +1,6 @@
 <x-guest-layout>
     <x-slot name="title">
-        {{ $label -> name }} műtárgyak
+        {{ $label->name }} műtárgyak
     </x-slot>
     <div class="container mx-auto p-3 lg:px-36">
         <div class="grid grid-cols-1 lg:grid-cols-2 mb-4">
@@ -8,14 +8,15 @@
                 <h1 class="font-bold my-4 text-4xl">Múzeum kiállított tárgyainak listája</h1>
             </div>
             <div class="flex items-center gap-2 lg:justify-end">
-                <a href="{{ route('labels.edit', $label) }}" class="bg-orange-500 hover:bg-orange-700 px-2 py-1 text-white"><i
-                        class="fas fa-edit"></i> Címke szerkesztése</a>
+                <a href="{{ route('labels.edit', $label) }}"
+                    class="bg-orange-500 hover:bg-orange-700 px-2 py-1 text-white"><i class="fas fa-edit"></i> Címke
+                    szerkesztése</a>
 
             </div>
         </div>
         <div class="grid grid-cols-4 gap-6">
             <div class="col-span-4 lg:col-span-3">
-                <h2 class="font-semibold text-3xl my-2">{{ $label -> name }} címkéhez tartozó műtárgyak</h2>
+                <h2 class="font-semibold text-3xl my-2">{{ $label->name }} címkéhez tartozó műtárgyak</h2>
                 <div class="grid grid-cols-3 gap-3">
 
                     @forelse ($items as $item)
@@ -36,7 +37,7 @@
                                     <i class="fas fa-angle-right"></i></button>
                             </div>
                         </div>
-                        @empty
+                    @empty
                         <div class="col-span-3 bg-red-200 text-center rounded-lg py-1">
                             Ehhez a címkéhez nincsenek kiállított tárgyak
                         </div>
@@ -75,7 +76,8 @@
                             Statisztika
                         </h3>
                         <ul class="fa-ul">
-                            <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók: {{ $user_count }}
+                            <li><span class="fa-li"><i class="fas fa-user"></i></span>Felhasználók:
+                                {{ $user_count }}
                             </li>
                             <li><span class="fa-li"><i class="fas fa-file-alt"></i></span>Osszes kiallitott darab:
                                 {{ $items->count() }}</li>

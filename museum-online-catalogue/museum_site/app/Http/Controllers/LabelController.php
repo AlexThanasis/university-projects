@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class LabelController extends Controller
 {
@@ -39,12 +40,6 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->writeln("Hello from Terminal");
-
-        $out->writeln($request['name']);
-        $out->writeln($request['bg-color']);
-        $out->writeln($request['display']);
         $validated = $request->validate(
             [
                 'name' => 'required|min:3|unique:labels,name',
@@ -94,6 +89,9 @@ class LabelController extends Controller
      */
     public function edit(Label $label)
     {
+        if (!Auth::user() || Auth::user() && !Auth::user()->is_admin)
+        return abort(403);
+
         return view('labels.edit', ['label' => $label]);
     }
 
@@ -106,7 +104,7 @@ class LabelController extends Controller
      */
     public function update(Request $request, Label $label)
     {
-        $validated = $request->validate([
+        $validated = $request->validate(
             [
                 'name' => 'required|min:3|unique:labels,name',
                 'display' => 'required',
@@ -117,7 +115,7 @@ class LabelController extends Controller
                 'name.min' => 'A nev legalabb :min karakter legyen',
                 'name.unique' => 'Ilyen nevu kategoria mar letezik, a nev legyen egyedi'
             ]
-        ]);
+        );
 
         // in case of kebab-case we must resave to snake-case like this:
         $validated['color'] = $validated['bg-color'];

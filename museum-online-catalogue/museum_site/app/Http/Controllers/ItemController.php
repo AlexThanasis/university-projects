@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-use Monolog\Handler\PushoverHandler;
 
 class ItemController extends Controller
 {
@@ -113,7 +112,10 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        //
+        if (!Auth::user() || Auth::user() && !Auth::user()->is_admin)
+        return abort(403);
+
+        return view('items.edit', ['item' => $item]);
     }
 
     /**
@@ -125,7 +127,29 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        //
+        $validated = $request->validate(
+            [
+                'name' => 'required',
+                'description' => 'required',
+                'obtained' => 'required',
+                'labels' => 'nullable',
+                'labels.*' => 'integer|distinct|exists:labels,id',
+                'comments' => 'nullable',
+                'comments.*' => 'integer|distinct|exists:comments,id',
+                'image' => 'nullable|image',
+            ],
+            [
+                'name.required' => 'A név kitöltése kötelező!',
+                'name.min' => 'A név legalább :min karakter legyen',
+                'name.unique' => 'Ilyen nevű kategória már létezik, a név legyen egyedi',
+                'description.required' => 'A részletezése a tárgynak kötelező',
+                'obtained.required' => 'A kiállítása dátumának megadása kötelező',
+            ]
+        );
+
+        $item->update($validated);
+        
+        return redirect()->route('home');
     }
 
     /**

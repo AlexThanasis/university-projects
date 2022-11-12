@@ -54,7 +54,7 @@
                                     {{ Str::limit($item->description, 120) }}
                                 </p>
                                 <button
-                                    class="bg-blue-500 hover:bg-blue-600 px-1.5 py-1 text-white mt-3 rounded-lg font-semibold">
+                                    class="bg-slate-800 hover:bg-slate-700 px-1.5 py-1 text-white mt-3 rounded-lg font-semibold">
                                     <a href="{{ route('items.show', $item) }}"
                                         class="py-0.5 px-1.5 font-semibold text-white text-sm">
                                         Megnézem</a>
@@ -69,7 +69,7 @@
             <div class="col-span-4 lg:col-span-1">
                 <h2 class="font-semibold text-3xl my-2">Menü</h2>
                 <div class="grid grid-cols-1 gap-3">
-                    <div class="border px-2.5 py-2 border-gray-400">
+                    {{-- <div class="border px-2.5 py-2 border-gray-400">
                         <form>
                             <label for="name" class="block font-medium text-xl text-gray-700">Keresés</label>
                             <input type="text" name="name" id="name"
@@ -79,7 +79,7 @@
                                 class="mt-3 bg-blue-500 hover:bg-blue-600 text-gray-100 font-semibold px-2 py-1"><i
                                     class="fas fa-search"></i> Keresés</button>
                         </form>
-                    </div>
+                    </div> --}}
                     <div class="border px-2.5 py-2 border-gray-400">
                         <h3 class="mb-0.5 text-xl font-semibold">
                             Címkék

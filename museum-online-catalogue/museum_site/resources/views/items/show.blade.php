@@ -33,17 +33,25 @@
                 </div>
 
                 @can('delete', $item)
-                    {{-- @auth --}}
                     <br>
-                    <form action="{{ route('items.destroy', $item) }}" method="post" id="delete-form">
-                        @csrf
-                        @method('DELETE')
-                        <a href="{{ route('items.destroy', $item) }}"
-                            onclick="event.preventDefault(); document.querySelector('#delete-form').submit();"
-                            class="bg-red-500 hover:bg-red-700 rounded-full px-2 py-1 text-grey"><i
-                                class="fas fa-trash"></i> Kiállított
-                            tárgy törlése</a>
-                    </form>
+                    <div class="flex-auto flex space-x-4">
+                        {{-- @auth --}}
+
+                        <a href="{{ route('items.edit', $item) }}"
+                            class="bg-amber-500 hover:bg-amber-700 rounded-full px-2 py-1 text-white"><i
+                                class="fas fa-edit"></i> Kiállított tárgy
+                            szerkesztése</a>
+
+                        <form action="{{ route('items.destroy', $item) }}" method="post" id="delete-form">
+                            @csrf
+                            @method('DELETE')
+                            <a href="{{ route('items.destroy', $item) }}"
+                                onclick="event.preventDefault(); document.querySelector('#delete-form').submit();"
+                                class="bg-red-700 hover:bg-red-800 rounded-full px-2 py-1 text-white"><i
+                                    class="fas fa-trash"></i> Kiállított
+                                tárgy törlése</a>
+                        </form>
+                    </div>
                     <br>
                     {{-- @endauth --}}
                 @endcan
