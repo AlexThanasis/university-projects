@@ -9,14 +9,16 @@
             </div>
 
             @auth()
-                <div class="flex items-center gap-2 lg:justify-end">
-                    <a href="{{ route('labels.create') }}"
-                        class="bg-green-500 rounded-lg hover:bg-green-700 px-2 py-1 text-white"><i
-                            class="fas fa-plus-circle"></i> Új címke</a>
-                    <a href="{{ route('items.create') }}"
-                        class="bg-green-500 rounded-lg hover:bg-green-700 px-2 py-1 text-white"><i
-                            class="fas fa-plus-circle"></i> Új bejegyzés</a>
-                </div>
+                @if (Auth::user() -> is_admin)
+                    <div class="flex items-center gap-2 lg:justify-end">
+                        <a href="{{ route('labels.create') }}"
+                            class="bg-green-500 rounded-lg hover:bg-green-700 px-2 py-1 text-white"><i
+                                class="fas fa-plus-circle"></i> Új címke</a>
+                        <a href="{{ route('items.create') }}"
+                            class="bg-green-500 rounded-lg hover:bg-green-700 px-2 py-1 text-white"><i
+                                class="fas fa-plus-circle"></i> Új bejegyzés</a>
+                    </div>
+                @endif
             @endauth
 
         </div>
@@ -51,7 +53,8 @@
                                 <p class="text-gray-600 mt-1">
                                     {{ Str::limit($item->description, 120) }}
                                 </p>
-                                <button class="bg-blue-500 hover:bg-blue-600 px-1.5 py-1 text-white mt-3 rounded-lg font-semibold">
+                                <button
+                                    class="bg-blue-500 hover:bg-blue-600 px-1.5 py-1 text-white mt-3 rounded-lg font-semibold">
                                     <a href="{{ route('items.show', $item) }}"
                                         class="py-0.5 px-1.5 font-semibold text-white text-sm">
                                         Megnézem</a>
