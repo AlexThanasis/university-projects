@@ -42,8 +42,11 @@
             <div class="w-full">
                 <label class="block font-medium text-gray-700">Címkék</label>
                 <div class="flex flex-row pb-1">
-                    @foreach ($item->labels as $l)
-                        <input type="checkbox" class="my-0.5 mx-1" name="labels[]" value="{{ $l->id }}" checked>
+                    @foreach ($all_labels as $l)
+                        <input type="checkbox" class="my-0.5 mx-1" name="labels[]" value="{{ $l->id }}"
+                        {{-- {{ $item->labels.contains($l) ? "checked" : ""}} --}}
+                        
+                        >
                         <div class="py-0.5 px-1.5 font-semibold text-sm"
                             style="background-color: {{ $l->color }}; color: ;">{{ $l->name }}</div>
                     @endforeach

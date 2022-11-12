@@ -4,7 +4,17 @@
     </x-slot>
     <div class="container mx-auto p-3 overflow-hidden min-h-screen">
         <div class="mb-5">
-            <h1 class="font-semibold text-3xl mb-4">Címke szerkesztése</h1>
+            <div class="flex-auto flex space-x-4">
+                <h1 class="font-semibold text-3xl mb-4">Címke szerkesztése</h1>
+                <form action="{{ route('labels.destroy', $label) }}" method="post" id="delete-label-form">
+                    @csrf
+                    @method('DELETE')
+                    <a href="{{ route('labels.destroy', $label) }}"
+                        onclick="event.preventDefault(); document.querySelector('#delete-label-form').submit();"
+                        class="bg-red-500 hover:bg-red-600 rounded-full px-2 py-1 text-white"><i
+                            class="fas fa-trash"></i> Címke törlése</a>
+                </form>
+            </div>
             <p class="mb-2">Ezen az oldalon tudod a címkéket szerkeszteni. Tudod törölni is az adott címkét</p>
             <a href="{{ route('home') }}" class="text-blue-400 hover:text-blue-600 hover:underline"><i
                     class="fas fa-long-arrow-alt-left"></i> Vissza a bejegyzésekhez</a>
@@ -42,15 +52,8 @@
                     <div class="col-span-2 lg:col-span-1">
                         <label class="block text-sm font-medium text-gray-700">Címke látható legyen</label>
                         <input type="checkbox" id="display" name="display" x-model="display" checked>
-                        {{-- <label for="display" x-text="display"></label> --}}
-                    </div>
-                    {{-- <div class="col-span-2 lg:col-span-1">
-                        <label class="block text-sm font-medium text-gray-700">Display</label>
-                        <div x-ref="textColorPicker" id="text-color-picker" class="mt-1 h-8 w-full border border-black"
-                            :style="`background-color: ${textColor};`"></div>
-                        <p x-text="textColor"></p>
-                    </div> --}}
 
+                    </div>
                 </div>
                 <div class="col-span-4 lg:col-span-2">
                     <div x-show="labelName.length > 0">
@@ -62,11 +65,9 @@
             </div>
 
             <input type="hidden" id="bg-color" name="bg-color" x-model="bgColor" />
-            {{-- <input type="hidden" id="text-color" name="text-color" x-model="textColor" /> --}}
-            {{-- <input type="hidden" id="display" name="display" x-model="display" /> --}}
 
             <button type="submit"
-                class="mt-6 bg-blue-500 hover:bg-blue-600 text-gray-100 font-semibold px-2 py-1 text-xl">Létrehozás</button>
+                class="mt-6 bg-green-500 hover:bg-green-600 text-gray-100 rounded-xl font-semibold px-2 py-1 text-xl">Elmentés</button>
         </form>
     </div>
 </x-guest-layout>

@@ -108,7 +108,6 @@ class LabelController extends Controller
             [
                 'name' => 'required|min:3|unique:labels,name',
                 'display' => 'required',
-                // 'bg-color' => 'required',
             ],
             [
                 'name.required' => 'A nev kitoltese kotelezo!',
@@ -133,6 +132,10 @@ class LabelController extends Controller
      */
     public function destroy(Label $label)
     {
-        //
+        if (!Auth::user() || Auth::user() && !Auth::user()->is_admin)
+        return abort(403);
+        // $this->authorize('delete', $label);
+        $label->delete();
+        return redirect()->route('home');
     }
 }

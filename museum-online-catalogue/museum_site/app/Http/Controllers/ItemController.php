@@ -93,8 +93,12 @@ class ItemController extends Controller
             if ($label->display)
                 array_push($shown_labels, $label);
         };
+
+        // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        // $out->writeln($item->labels);
         return view('items.show', [
             'item' => $item,
+            'labels_for_item' => $item->labels(),
             'shown_labels' => $shown_labels,
         ]);
     }
@@ -108,9 +112,15 @@ class ItemController extends Controller
     public function edit(Item $item)
     {
         if (!Auth::user() || Auth::user() && !Auth::user()->is_admin)
-        return abort(403);
+            return abort(403);
 
-        return view('items.edit', ['item' => $item]);
+        return view(
+            'items.edit',
+            [
+                'item' => $item,
+                'all_labels' => Label::all(),
+            ]
+        );
     }
 
     /**
