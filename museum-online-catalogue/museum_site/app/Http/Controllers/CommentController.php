@@ -37,17 +37,11 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Item $item) {
-
-        $this->authorize('create', Comment::class);
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-
         $validated = $request->validate([
             'text' => 'required'
         ]);
 
-        error_log(json_encode($validated));
-        $out->writeln($request["text"]);
-        $out->writeln("sdfsdf");
+        // error_log(json_encode($validated));
         $request->user()->comments()->create($validated)->item()->associate($item)->save();
 
         Session::flash('comment-created', $request->user()->name);

@@ -34,20 +34,20 @@
                 @auth
                     <form action="{{ route('logout') }}" method="post" id="logout-form">
                         @csrf
-                        <a class="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4"
+                        <a class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-transparent hover:border-white lg:mt-0"
+
                             href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.querySelector('#logout-form').submit()">
                             Kijelentkezés
                         </a>
                     </form>
-
                 @else
                     <a href="{{ route('login') }}"
-                        class="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white">
+                        class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-transparent hover: border-white lg:mt-0e">
                         Bejelentkezés
                     </a>
                     <a href="{{ route('register') }}"
-                        class="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white">
+                        class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-transparent hover:border-white lg:mt-0">
                         Regisztráció
                     </a>
 
@@ -57,41 +57,13 @@
             <div>
                 @auth
                     <a href="#"
-                        class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent lg:mt-0">Üdv, {{ Auth::user()->name }}</a>
+                        class="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">Üdv,
+                        {{ Auth::user()->name }}</a>
                 @endauth
 
             </div>
         </div>
     </nav>
-    <nav>
-
-        <ul class="flex">
-
-
-            {{-- <a class="text-blue-500 hover:text-blue-800" href="#">Active</a>
-            <a class="text-blue-500 hover:text-blue-800" href="#">Link</a>
-                <a class="text-blue-500 hover:text-blue-800" href="#">Link</a>
-                <a class="text-gray-400 cursor-not-allowed" href="#">Disabled</a> --}}
-        </ul>
-    </nav>
-    {{-- @auth
-        Üdv, {{ Auth::user()->name }}
-        <form action="{{ route('logout') }}" method="post" id="logout-form">
-            @csrf
-            <a href="{{ route('logout') }}"
-                onclick="event.preventDefault(); document.querySelector('#logout-form').submit()"
-                class="hover:underline">Kijelentkezés
-            </a>
-        </form>
-    @else
-        <a href="{{ route('login') }}" class="hover:underline">Bejelentkezés</a>
-        <a href="{{ route('register') }}" class="hover:underline">Regisztráció</a>
-
-    @endauth --}}
-
-    {{-- @guest()
-
-        @endguest --}}
     <div class="font-sans text-gray-900 antialiased">
         {{ $slot }}
     </div>

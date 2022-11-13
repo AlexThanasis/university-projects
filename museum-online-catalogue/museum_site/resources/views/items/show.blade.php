@@ -14,6 +14,16 @@
                         eltárolódott
                     </div>
                 @endif
+                @if (Session::has('comment-updated'))
+                    <div class="col-span-3 bg-green-200 text-center rounded-lg py-1">
+                        A(z) {{ Session::get('comment-created') }} felhasználó hozzászólása frissült
+                    </div>
+                @endif
+                @if (Session::has('comment-deleted'))
+                    <div class="col-span-3 bg-green-200 text-center rounded-lg py-1">
+                        A(z) {{ Session::get('comment-created') }} felhasználó új hozzászólása törölve lett
+                    </div>
+                @endif
                 <div>
                     <a href="/" class="text-blue-400 hover:text-blue-600 hover:underline"><i
                             class="fas fa-long-arrow-alt-left"></i> Vissza a bejegyzésekhez</a>
@@ -78,7 +88,8 @@
                             <textarea placeholder="Új hozzászólását írja ide" name="text" id="new-comment-textarea" cols="60"
                                 rows="5"></textarea>
                             <div class="text-end col-sm-1">
-                                <button type="submit" class="bg-slate-700 hover:bg-slate-800 rounded-full px-2 py-1 text-white">
+                                <button type="submit"
+                                    class="bg-green-500 hover:bg-green-700 rounded-full px-2 py-1 text-white">
                                     <i class="fas fa-save"></i>
                                     Elmentés
                                 </button>
@@ -96,9 +107,43 @@
                                     <h5>
                                         {{ $comment->created_at }}
                                     </h5>
-                                    <p class="col-span-3 bg-gray-100 text-justify rounded-lg py-1">
-                                        {!! str_replace('\n\n', '<br>', $comment->text) !!}
-                                    </p>
+                                    <div class="comment-text">
+                                        <p class="col-span-3 bg-gray-100 text-justify rounded-lg py-1">
+                                            {!! str_replace('\n\n', '<br>', $comment->text) !!}
+                                        </p>
+                                        <div class="hidden">
+                                            <form action="{{ route('comments.update', $comment) }}" method="post" id="update-{{ $loop -> iteration }}-comment-textarea">
+                                                <textarea name="text" id="update-{{ $loop -> iteration }}-comment-textarea" cols="60" rows="5"> {!! str_replace('\n\n', '<br>', $comment->text) !!}</textarea>
+                                                @csrf
+                                                @method('PATCH')
+                                                <a href="{{ route('comments.update', $comment) }}"
+                                                    onclick="event.preventDefault(); document.querySelector('#update-{{ $loop -> iteration }}-comment-textarea').submit();"
+                                                    class="bg-green-500 hover:bg-green-700 rounded-full px-2 py-1 text-white">
+                                                    Elmentés </a>
+                                            </form>
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <div class="flex-auto flex space-x-4">
+
+                                        @can('update', $comment)
+                                            <button
+                                                onclick="event.preventDefault(); document.querySelector('.comment-text > p, .comment-text > div').classList.toggle('hidden');"
+                                                class="bg-amber-500 hover:bg-amber-700 rounded-full px-2 py-1 text-white"><i
+                                                    class="fas fa-trash"></i> Hozzászólás szerkesztése</button>
+                                        @endcan
+                                        @can('delete', $comment)
+                                            <form action="{{ route('comments.destroy', $comment) }}" method="post"
+                                                id="delete-{{ $loop -> iteration }}-comment-form">
+                                                @csrf
+                                                @method('DELETE')
+                                                <a href="{{ route('comments.destroy', $comment) }}"
+                                                    onclick="event.preventDefault(); document.querySelector('#delete-{{ $loop -> iteration }}-comment-form').submit();"
+                                                    class="bg-red-700 hover:bg-red-800 rounded-full px-2 py-1 text-white"><i
+                                                        class="fas fa-edit"></i> Hozzászólás törlése</a>
+                                            </form>
+                                        @endcan
+                                    </div>
                                 </div>
                                 <br>
                             @empty

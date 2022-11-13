@@ -53,7 +53,7 @@ class CommentPolicy
      */
     public function update(User $user, Comment $comment)
     {
-        return ($user !== null && $user -> is($comment -> user));
+        return ($user !== null && $user -> is($comment -> user) || $user !== null && $user -> is_admin);
     }
 
     /**
@@ -65,7 +65,7 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment)
     {
-        return ($user !== null && $user -> is($comment -> user));
+        return ($user !== null && $user -> is($comment -> user) || $user !== null && $user -> is_admin);
     }
 
     /**
