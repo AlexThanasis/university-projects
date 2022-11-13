@@ -33,7 +33,7 @@
                 <div class="w-full">
                     <label class="block font-medium text-gray-700">Kiállított tárgy katalógusbeli felvételi
                         időpontja</label>
-                    <input type="date" id="obtained" name="obtained" value="2022-07-22"
+                    <input type="date" id="obtained" name="obtained" value="2022-11-13"
                         class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300">
                 </div>
             </div>
