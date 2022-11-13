@@ -39,6 +39,7 @@ class CommentController extends Controller
     public function store(Request $request, Item $item)
     {
         // $this->authorize('create', Comment::class);
+        
 
         $validated = $request->validate([
             'text' => 'required'
@@ -77,7 +78,7 @@ class CommentController extends Controller
         $comment_edit = $comment;
         $comments = $item->comments()
             ->orderByDesc('id')
-            ->paginate(5);
+            ->paginate(6);
         $labels = $item->labels()->where('display', true)->get();
         return view('items.show', compact('item', 'labels', 'comments', 'comment_edit'));
     }
@@ -101,7 +102,6 @@ class CommentController extends Controller
         $comment->update($validated);
 
         Session::flash('comment-updated', $comment->user->name);
-
         return redirect(route('items.show', $comment->item));
     }
 
@@ -114,11 +114,9 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         $this->authorize('delete', $comment);
-
         $comment->delete();
 
         Session::flash('comment-deleted', $comment->user);
-
         return redirect(route('items.show', $comment->item));
     }
 }
