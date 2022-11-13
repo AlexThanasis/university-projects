@@ -35,7 +35,7 @@
                 <div class="w-full">
                     <label class="block font-medium text-gray-700">Kiállított tárgy katalógusbeli felvételi
                         időpontja</label>
-                    <input type="date" id="obtained" name="obtained" value="2022-11-01"
+                    <input type="date" id="obtained" name="obtained" value="2022-11-13"
                         class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300">
                 </div>
             </div>
@@ -44,9 +44,7 @@
                 <div class="flex flex-row pb-1">
                     @foreach ($all_labels as $l)
                         <input type="checkbox" class="my-0.5 mx-1" name="labels[]" value="{{ $l->id }}"
-                        {{-- {{ $item->labels.contains($l) ? "checked" : ""}} --}}
-                        
-                        >
+                            @checked(in_array($l->id, old('items', $item->labels->pluck('id')->toArray())))>
                         <div class="py-0.5 px-1.5 font-semibold text-sm"
                             style="background-color: {{ $l->color }}; color: ;">{{ $l->name }}</div>
                     @endforeach
@@ -54,13 +52,13 @@
             </div>
             <div class="w-full">
                 <label class="block font-medium text-gray-700">Hozzászólások</label>
-                <div class="flex flex-row pb-1">
+                <div class="flex flex-column pb-1">
                     @forelse ($item->comments as $comment)
                         <input type="checkbox" class="my-0.5 mx-1" name="comments[]" value="{{ $comment->id }}"
                             checked>
                         <div class="border px-2.5 py-2 border-gray-400">
                             <h4 class="text-xl font-semibold">
-                                {{ $comment->user_id }}
+                                {{ $comment->user->name }}
                             </h4>
                             <h5>
                                 {{ $comment->created_at }}

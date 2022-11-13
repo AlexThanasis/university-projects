@@ -113,17 +113,6 @@ class ItemController extends Controller
     {
         if (!Auth::user() || Auth::user() && !Auth::user()->is_admin)
             return abort(403);
-        // $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        // $out->writeln("Hello from Terminal");
-        $all_labels = Label::all();
-        $labels_belong_to_item = $item -> labels->toArray();
-        $labels_not_belong_to_item = [];
-        foreach ($all_labels as $label) {
-            if (!in_array($label, $labels_belong_to_item)) {
-                array_push($labels_not_belong_to_item, $label);
-                // $out->writeln( $label);
-            }
-        };
 
         return view(
             'items.edit',
@@ -171,10 +160,16 @@ class ItemController extends Controller
             $validated['image'] = $fname;
         }
 
-        Session::flash('item-created', $item->name);
 
-        $item->labels()->sync($request->labels);
+        if (isset($validated['labels'])) {
+            $item->labels()->sync($request->labels);
+        }
+        if (isset($validated['comments'])) {
+            $item->comments()->sync($request->comments);
+        }
+
         $item->update($validated);
+        Session::flash('item-updated', $item->name);
 
         return redirect()->route('home');
     }

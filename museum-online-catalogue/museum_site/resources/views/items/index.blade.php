@@ -36,6 +36,11 @@
                             A(z) {{ Session::get('item-created') }} kiállított tárgy fel lett véve és eltárolódott
                         </div>
                     @endif
+                    @if (Session::has('item-updated'))
+                        <div class="col-span-3 bg-green-200 text-center rounded-lg py-1">
+                            A(z) {{ Session::get('item-updated') }} kiállított tárgy változtatva lettek sikeresen
+                        </div>
+                    @endif
                     @foreach ($items as $item)
                         <div class="col-span-3 lg:col-span-1">
                             @if ($item->image === null)

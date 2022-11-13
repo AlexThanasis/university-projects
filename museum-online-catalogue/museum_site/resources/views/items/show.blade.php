@@ -89,7 +89,7 @@
                     <div class="flex flex-row flex-wrap gap-1 mt-3">
                         <div class="comments-section">
                             @forelse ($item->comments->sortBy('created_at') as $comment)
-                                <div class="border px-2.5 py-2 border-gray-400">
+                                <div class="border px-2.5 py-2 min-w-fit">
                                     <h4 class="text-xl font-semibold">
                                         {{ $comment->user->name }}
                                     </h4>
@@ -100,6 +100,7 @@
                                         {!! str_replace('\n\n', '<br>', $comment->text) !!}
                                     </p>
                                 </div>
+                                <br>
                             @empty
                                 <div class="col-span-3 bg-red-200 text-center rounded-lg py-1">
                                     Ehhez a műtárgyhoz nincsek hozzászólások
