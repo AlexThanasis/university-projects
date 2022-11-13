@@ -73,23 +73,13 @@
                             </div>
                         </div>
                     @endforeach
+                    <br>
                     {{ $items->links() }}
                 </div>
             </div>
             <div class="col-span-4 lg:col-span-1">
                 <h2 class="font-semibold text-3xl my-2">Menü</h2>
                 <div class="grid grid-cols-1 gap-3">
-                    {{-- <div class="border px-2.5 py-2 border-gray-400">
-                        <form>
-                            <label for="name" class="block font-medium text-xl text-gray-700">Keresés</label>
-                            <input type="text" name="name" id="name"
-                                class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300"
-                                placeholder="Bejegyzés címe">
-                            <button type="submit"
-                                class="mt-3 bg-blue-500 hover:bg-blue-600 text-gray-100 font-semibold px-2 py-1"><i
-                                    class="fas fa-search"></i> Keresés</button>
-                        </form>
-                    </div> --}}
                     <div class="border px-2.5 py-2 border-gray-400">
                         <h3 class="mb-0.5 text-xl font-semibold">
                             Címkék

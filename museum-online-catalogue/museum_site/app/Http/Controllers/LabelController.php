@@ -74,9 +74,10 @@ class LabelController extends Controller
     {
         return view('labels.show', [
             'label' => $label,
-            'items' => $label->items,
+            'items' => Item::orderBy('obtained', 'desc')->paginate(9),
             'labels' => Label::all(),
             'user_count' => User::count(),
+            'item_count' => Item::count(),
             'comments_count' => Comment::count(),
         ]);
     }
