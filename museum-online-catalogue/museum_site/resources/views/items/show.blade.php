@@ -107,7 +107,7 @@
                                     <h5>
                                         {{ $comment->created_at }}
                                     </h5>
-                                    <div class="comment-text">
+                                    <div id="comment-{{ $loop -> iteration }}-text">
                                         <p class="col-span-3 bg-gray-100 text-justify rounded-lg py-1">
                                             {!! str_replace('\n\n', '<br>', $comment->text) !!}
                                         </p>
@@ -128,7 +128,7 @@
 
                                         @can('update', $comment)
                                             <button
-                                                onclick="event.preventDefault(); document.querySelector('.comment-text > p, .comment-text > div').classList.toggle('hidden');"
+                                                onclick="event.preventDefault(); document.querySelector('#comment-{{ $loop -> iteration }}-text > p').classList.toggle('hidden'); document.querySelector('#comment-{{ $loop -> iteration }}-text > div').classList.toggle('hidden');"
                                                 class="bg-amber-500 hover:bg-amber-700 rounded-full px-2 py-1 text-white"><i
                                                     class="fas fa-trash"></i> Hozzászólás szerkesztése</button>
                                         @endcan
