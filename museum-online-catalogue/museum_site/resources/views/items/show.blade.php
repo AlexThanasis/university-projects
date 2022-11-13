@@ -10,7 +10,8 @@
                 </div>
                 @if (Session::has('comment-created'))
                     <div class="col-span-3 bg-green-200 text-center rounded-lg py-1">
-                        A(z) {{ Session::get('comment-created') }} felhasználó új hozzászólása fel lett véve és eltárolódott
+                        A(z) {{ Session::get('comment-created') }} felhasználó új hozzászólása fel lett véve és
+                        eltárolódott
                     </div>
                 @endif
                 <div>
@@ -72,20 +73,25 @@
                     </h3>
 
                     <div class="flex flex-row flex-wrap gap-1 mt-3 hidden" id="new-comment">
-                        <form action="" method="post">
-                            <textarea placeholder="Új hozzászólását írja ide" name="new-comment" cols="60" rows="5"></textarea>
-                            <a href="{{ route('comments.store', $item) }}"
-                                class="bg-slate-700 hover:bg-slate-800 rounded-full px-2 py-1 text-white"><i
-                                    class="fas fa-edit"></i> Elmentés</a>
+                        <form action="{{ route('items.comments.store', $item) }}" method="post">
+                            @csrf
+                            <textarea placeholder="Új hozzászólását írja ide" name="text" id="new-comment-textarea" cols="60"
+                                rows="5"></textarea>
+                            <div class="text-end col-sm-1">
+                                <button type="submit" class="bg-slate-700 hover:bg-slate-800 rounded-full px-2 py-1 text-white">
+                                    <i class="fas fa-save"></i>
+                                    Elmentés
+                                </button>
+                            </div>
                         </form>
                     </div>
 
                     <div class="flex flex-row flex-wrap gap-1 mt-3">
                         <div class="comments-section">
-                            @forelse ($item->comments as $comment)
+                            @forelse ($item->comments->sortBy('created_at') as $comment)
                                 <div class="border px-2.5 py-2 border-gray-400">
                                     <h4 class="text-xl font-semibold">
-                                        {{ $comment->user_id }}
+                                        {{ $comment->user->name }}
                                     </h4>
                                     <h5>
                                         {{ $comment->created_at }}

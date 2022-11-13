@@ -36,18 +36,19 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Item $item)
-    {
-        // $this->authorize('create', Comment::class);
-        
+    public function store(Request $request, Item $item) {
+
+        $this->authorize('create', Comment::class);
+        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
 
         $validated = $request->validate([
             'text' => 'required'
         ]);
 
-        $request->user()->comments()->create($validated)
-            ->item()->associate($item)
-            ->save();
+        error_log(json_encode($validated));
+        $out->writeln($request["text"]);
+        $out->writeln("sdfsdf");
+        $request->user()->comments()->create($validated)->item()->associate($item)->save();
 
         Session::flash('comment-created', $request->user()->name);
 
@@ -74,11 +75,10 @@ class CommentController extends Controller
     public function edit(Comment $comment)
     {
         $this->authorize('update', $comment);
+
         $item = $comment->item;
         $comment_edit = $comment;
-        $comments = $item->comments()
-            ->orderByDesc('id')
-            ->paginate(6);
+        $comments = $item->comments()->orderByDesc('id')->paginate(6);
         $labels = $item->labels()->where('display', true)->get();
         return view('items.show', compact('item', 'labels', 'comments', 'comment_edit'));
     }
